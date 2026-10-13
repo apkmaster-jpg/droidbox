@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Needed for QEMU's VNC server (localhost socket for guest display). -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- No special permissions needed for the core VM.
+         Hardware bridges (camera/mic/location) are opt-in per VM and
+         request their permissions only when the user enables them. -->
+
+    <application
+        android:name=".DroidBoxApp"
+        android:allowBackup="false"
+        android:extractNativeLibs="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="DroidBox"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.Material.NoActionBar"
+        tools:targetApi="35">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

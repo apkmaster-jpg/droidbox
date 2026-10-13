@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Stylized "D" box for DroidBox -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M32,28 L76,28 C84,28 88,34 88,44 L88,64 C88,74 84,80 76,80 L32,80 C24,80 20,74 20,64 L20,44 C20,34 24,28 32,28 Z M38,42 L38,66 L58,66 C66,66 70,61 70,54 C70,47 66,42 58,42 L38,42 Z"/>
+</vector>
