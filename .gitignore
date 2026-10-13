@@ -1,0 +1,35 @@
+# DroidBox .gitignore — keep the repo lean; giant/local dirs are documented, not committed.
+
+# Gradle / Android build outputs
+.gradle/
+build/
+app/build/
+app/.cxx/
+local.properties
+*.apk
+*.aab
+
+# Kotlin
+.kotlin/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# === Deliberately NOT committed (too large; rebuild/download via scripts) ===
+# 754MB offline Maven repo (built by native/fetch-maven-repo.py)
+local-maven-repo/
+# 1.6GB QEMU NDK build working tree (built by native/build-qemu-android.sh)
+native/work/
+# 1GB QEMU source tarball + extracted tree (see native/work/BUILD-MANIFEST.txt)
+third-party/
+# 3.5GB downloaded ISOs/SDK/NDK archives
+downloads/
+# User ISOs and virtual disks — never commit
+*.iso
+*.img
+*.qcow2
+
+# Logs and temp
+logs/
+*.log

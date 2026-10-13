@@ -22,7 +22,7 @@
 
 5. **Real installation** — Android-x86 9.0-r2 was fully installed to the virtual disk on-device: sda1 partitioned via cfdisk, ext4 formatted, GRUB installed. The installer completed and offered "Run Android-x86".
 
-6. **Deep guest boot** — With `android-x86_64-8.1-r6-k49.iso` (kernel 4.9), the guest booted to **925+ seconds** of kernel time with Android framework services starting:
+6. **Deep guest boot** — With `android-x86_64-8.1-r6-k49.iso` (kernel 4.9), the guest booted to **1354+ seconds** of kernel time with Android framework services starting:
    - surfaceflinger (80s) — display server
    - hal_audio_default (265s) — audio HAL
    - zygote (432s) — app runtime
@@ -30,20 +30,26 @@
    - netd (462s) — network daemon
    - mediaserver (650s) — media service
 
+   Screenshots from ~1255s onward show zygote repeatedly starting, being killed by **signal 9**, and restarting — an apparent crash/restart loop. The exact root cause is **not conclusively proven**. A QEMU/TCG emulation limitation is only the leading hypothesis (see failure reason below).
+
+7. **Not tested** — Installing the k49 build to the virtual disk (as was done with 9.0-r2) was proposed but **never tested**, so no claim is made about whether an installed k49 boot would behave differently.
+
 ## Exact Failure Reason
 
 **The Android boot animation/launcher never appeared.**
 
-The guest kernel boots and Android framework services start, but under TCG (x86_64-on-ARM CPU emulation, no KVM), the boot progresses at roughly 1/10th real-time speed or slower. At 925s of guest time (likely 60+ minutes of wall-clock time), the System Server was still initializing services. The boot animation requires SurfaceFlinger + BootAnimation service to complete, which never happened within the observed window.
+The guest kernel boots and Android framework services start, but under TCG (x86_64-on-ARM CPU emulation, no KVM), the boot progresses extremely slowly. Screenshots up to ~1354s of guest time (likely 60+ minutes of wall-clock time) show framework services initializing, followed from ~1255s by apparent **signal-9 zygote restarts** — zygote starting, being killed, and restarting in a loop.
 
-**This is a physical TCG speed limit, not a fixable app bug.** The following were all ruled out:
+**The exact root cause is not conclusively proven.** The leading hypothesis is a QEMU/TCG emulation correctness or speed limitation (x86_64-on-ARM, no KVM), but this has not been isolated — it is a hypothesis, not a proven diagnosis. No claim is made that this is unfixable; the standing plan is to retry when a newer QEMU release with TCG fixes is available.
+
+The following were ruled out as causes of the stall:
 - RAM (2GB vs 4GB — same hang point)
 - Disk interface (virtio-blk → IDE → AHCI — all functional)
 - VNC display path (incremental updates, timeout fix — frames flow correctly)
 - Input (keyboard works, installer navigated successfully)
 - QEMU configuration (q35, single-thread TCG — stable)
 
-The 9.0-r2 ISO hangs at ~70s (vold/init). The 8.1-r6-k49 ISO progresses much further (925s+) but cannot complete within practical time.
+The 9.0-r2 ISO hangs at ~70s (vold/init). The 8.1-r6-k49 ISO progresses much further (1354s+) but the boot animation/launcher was never observed within the observed window. Installing the k49 build to disk was proposed but never tested.
 
 ## Artifacts
 

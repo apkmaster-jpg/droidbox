@@ -1,0 +1,9 @@
+DroidBox QEMU Android build manifest
+date: 2026-10-12T06:33:21Z
+qemu: 11.1.2 (https://download.qemu.org/qemu-11.1.2.tar.xz)
+qemu sha256: 731b5681e4bb18be313231579b8efd0296c5b015fa36dc533874b639ba838016  qemu-11.1.2.tar.xz
+patch base: QubeVM qemu-11.1.2.patch (GPL-3.0, identifiers renamed qube->droidbox)
+libffi: 3.8.0 | glib: 2.88.3 | pixman: 0.46.4 | libslirp: 4.9.4 | dtc: b6910bec11614980a21e46fbccc35934b671bd81
+ndk: r30.0.16248370 | host abi: arm64-v8a | guest target: x86_64-softmmu
+configure flags: see /home/hatch/workspace/droidbox/native/work/qemu-configure.log
+output: /home/hatch/workspace/droidbox/native/work/qemu-11.1.2-droidbox/build/libqemu-system-x86_64.so

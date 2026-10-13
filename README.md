@@ -1,6 +1,6 @@
 # DroidBox — Real Android VM on Android
 
-**Status:** PARTIAL (see `/output/DroidBox-FINAL-REPORT.md`)
+**Status:** PARTIAL (see `FINAL-REPORT.md`)
 
 DroidBox is an Android app that boots a **real** user-supplied Android-x86 ISO through **native QEMU full-system emulation**. No simulators, no mocks, no fake UI — ever.
 
@@ -14,7 +14,7 @@ DroidBox is an Android app that boots a **real** user-supplied Android-x86 ISO t
 
 ## Why PARTIAL
 
-The Android launcher/boot animation never appears. Under QEMU TCG (x86_64-on-ARM, no KVM), the guest boots extremely slowly, and zygote enters a crash loop around 1255s (a TCG emulation bug, not an app bug). This is a physical TCG speed/correctness limit.
+The Android launcher/boot animation never appears. Under QEMU TCG (x86_64-on-ARM, no KVM), the guest boots extremely slowly, and screenshots from ~1255s onward show zygote repeatedly starting, being killed by signal 9, and restarting. The exact root cause is **not conclusively proven** — a QEMU/TCG emulation limitation is the leading hypothesis, not a diagnosis. Installing the k49 build to disk (proposed, never tested) might behave differently; no claim is made either way.
 
 **When QEMU releases a new version with TCG fixes, retry the boot** — the app is ready.
 
@@ -49,4 +49,4 @@ v5 → v28: native engine → VNC → input → fullscreen → diagnostics → k
 
 ## License
 
-QEMU: GPL-2.0-or-later. See `/output/DroidBox-THIRD-PARTY-NOTICES.md`.
+QEMU: GPL-2.0-or-later. See `THIRD-PARTY-NOTICES.md`.
